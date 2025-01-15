@@ -1,0 +1,65 @@
+# URL Shortener API
+
+Este é um projeto de **Encurtador de URLs**, que permite criar URLs encurtadas e redirecionar para as URLs originais. A aplicação foi desenvolvida com **Node.js** e possui uma documentação de API integrada com o **Swagger**.
+
+---
+
+## **Funcionalidades**
+
+- Encurtar uma URL fornecida.
+- Redirecionar para a URL original a partir de uma URL encurtada.
+- Visualizar a documentação da API diretamente no navegador.
+
+---
+
+## **Deploy**
+
+Este projeto foi implantado na nuvem utilizando **Docker**. 
+
+### **Passo a Passo para Deploy no Docker**
+
+1. Certifique-se de ter o **Docker** instalado em sua máquina.
+   - [Guia para instalar Docker](https://docs.docker.com/get-docker/)
+
+2. Clone o repositório do projeto:
+   ```bash
+   git clone https://github.com/BrayanMota/url_shortener.git
+   cd url_shortener
+   ```
+
+3. Sem docker-compose:
+
+    Construa a imagem Docker:
+    ```bash
+    docker build -t url-shortener .
+    ```
+
+    Inicie o container:
+    ```bash
+    docker run -p 3000:3000 url-shortener
+    ```
+
+4. Com docker-compose:
+
+    Execute o comando abaixo para construir e iniciar o container:
+    ```bash
+    docker-compose up --build
+    ```
+
+    Para parar o container:
+    ```bash
+    docker-compose down
+    ```
+
+5. Após iniciar o container, a aplicação estará disponível em:
+    http://localhost:3000
+
+6. Acesse a documentação da API via Swagger:
+    http://localhost:3000/api-docs
+
+## Documentação da API
+A documentação da API está disponível em formato Swagger e pode ser acessada em:
+- http://url_shoorte/api-docs
+
+Se a aplicação estiver rodando localmente, o link será:
+- http://localhost:3000/api-docs

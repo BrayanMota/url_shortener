@@ -1,0 +1,185 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "URL Shortener API",
+        "version": "1.0.0",
+        "description": "API para encurtamento de URLs, incluindo métodos para gerenciar e consultar URLs encurtadas."
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Servidor Local"
+        }
+    ],
+    "paths": {
+        "/shorten": {
+            "post": {
+                "summary": "Encurtar URL",
+                "description": "Recebe uma URL longa e retorna uma URL encurtada.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "url": {
+                                        "type": "string",
+                                        "example": "https://exemplo.com"
+                                    }
+                                },
+                                "required": [
+                                    "url"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "shortUrl": {
+                                            "type": "string",
+                                            "example": "http://localhost:3000/abc123"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/{shortUrlId}": {
+            "get": {
+                "summary": "Redirecionar para URL original",
+                "description": "Recebe um ID de URL encurtada e redireciona para a URL original.",
+                "parameters": [
+                    {
+                        "name": "shortUrlId",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID da URL encurtada.",
+                        "schema": {
+                            "type": "string",
+                            "example": "abc123"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirecionado com sucesso para a URL original"
+                    },
+                    "404": {
+                        "description": "ID de URL não encontrado"
+                    }
+                }
+            }
+        },
+        "/urls/date": {
+            "get": {
+                "summary": "Consultar URLs encurtadas por data",
+                "description": "Retorna todas as URLs encurtadas em uma data específica.",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": true,
+                        "description": "Data no formato AAAA-MM-DD.",
+                        "schema": {
+                            "type": "string",
+                            "example": "2023-01-01"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "URLs encontradas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "originalUrl": {
+                                                "type": "string",
+                                                "example": "https://exemplo.com"
+                                            },
+                                            "shortUrl": {
+                                                "type": "string",
+                                                "example": "http://localhost:3000/abc123"
+                                            },
+                                            "createdAt": {
+                                                "type": "string",
+                                                "example": "2023-01-01T12:00:00Z"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhuma URL encontrada para a data fornecida"
+                    }
+                }
+            }
+        },
+        "/urls/{shortUrlId}": {
+            "get": {
+                "summary": "Obter informações por ID da URL",
+                "description": "Recebe o ID de uma URL encurtada e retorna suas informações completas.",
+                "parameters": [
+                    {
+                        "name": "shortUrlId",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID da URL encurtada.",
+                        "schema": {
+                            "type": "string",
+                            "example": "abc123"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes da URL encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "originalUrl": {
+                                            "type": "string",
+                                            "example": "https://exemplo.com"
+                                        },
+                                        "shortUrl": {
+                                            "type": "string",
+                                            "example": "http://localhost:3000/abc123"
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "example": "2023-01-01T12:00:00Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "URL não encontrada"
+                    }
+                }
+            }
+        }
+    }
+}
